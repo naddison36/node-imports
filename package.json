@@ -1,0 +1,26 @@
+{
+  "name": "node-imports",
+  "version": "1.0.0",
+  "description": "An example Node.js program using TypeScript to show module imports and type definitions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naddison36/node-imports.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naddison36/node-imports/issues"
+  },
+  "homepage": "https://github.com/naddison36/node-imports#readme",
+  "dependencies": {
+    "@types/bignumber.js": "^4.0.2",
+    "bignumber.js": "^4.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^2.3.4"
+  }
+}
