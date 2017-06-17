@@ -18,6 +18,7 @@
   "homepage": "https://github.com/naddison36/node-imports#readme",
   "dependencies": {
     "@types/bignumber.js": "^4.0.2",
+    "@types/node": "^7.0.31",
     "bignumber.js": "^4.0.2"
   },
   "devDependencies": {

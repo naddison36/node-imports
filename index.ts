@@ -1,4 +1,4 @@
-import * as BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
 
 const x = 0.1,
     y = 0.2;
