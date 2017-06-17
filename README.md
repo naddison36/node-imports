@@ -91,6 +91,12 @@ Reterting the bidnumber.js type definition file change back to `export = BigNumb
 Error:(6, 31) TS2686:'BigNumber' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 ```
 
+This method also get the following error at runtime
+```
+ReferenceError: BigNumber is not defined
+
+```
+
 4. import {BigNumber} but don't export the BigNumber namespace from Type Definition
 
 `import {BigNumber} from 'bignumber.js'` in `index.ts`
@@ -101,7 +107,7 @@ results in the following TypeScript error
 Error:(6, 31) TS2693:'BigNumber' only refers to a type, but is being used as a value here.
 ```
 
-5. import * as BigNumber
+5. import * as BigNumber from 'bignumber.js
 
 `import * as BigNumber from 'bignumber.js'`
 
@@ -119,4 +125,14 @@ Installing the node types `npm install @types/node --save` and using the above i
 
 ```
 Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
+```
+
+7. const BigNumber = require('bignumber.js');
+
+`const BigNumber = require('bignumber.js');`
+
+using the above require in the [index.ts](./index.ts) file results in TypeScript error:
+
+```
+Error:(6, 15) TS2304:Cannot find name 'BigNumber'.
 ```
