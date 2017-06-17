@@ -136,3 +136,13 @@ using the above require in the [index.ts](./index.ts) file results in TypeScript
 ```
 Error:(6, 15) TS2304:Cannot find name 'BigNumber'.
 ```
+
+8. allowSyntheticDefaultImports
+
+```
+"allowSyntheticDefaultImports": true  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+```
+Using the above config in the TypeScript configuration file [tsconfig.json](./tsconfig.json) results in TypeScript error:
+```
+Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
+```
