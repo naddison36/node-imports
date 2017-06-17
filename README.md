@@ -2,7 +2,7 @@
 An example Node.js program using TypeScript to show module imports and type definitions work.
 
 ## Project setup
-The following steps assume you have Node.js installed which comes with the Node Package Manager (npm).
+The following steps assume you have Node.js installed which comes with the Node Package Manager (npm). For the below testing `node v6.10.3` and `npm 3.10.10` was used.
 
 Create the [package.json](./package.json) file for npm configuration
 ```
@@ -61,8 +61,39 @@ Which should give you the following output
 0.1 + 0.2 = 0.3
 ```
 
+## Changes to get BigNumber Type Definitions to work
+
+Changes required to get the following imports to work without any TypeScript errors
+```javascript
+import BigNumber from 'bignumber.js';
+or
+import {BigNumber} from 'bignumber.js';
+
+```
+
+As per [this](https://stackoverflow.com/questions/44605322/typescript-type-definitions-for-bignumber) Stack Overflow answer from [Catalyst](https://stackoverflow.com/users/1710444/catalyst), change the bignumber.js Type Definition file [node_modules/@types/bignumber.js/index.d.ts](./node_modules/@types/bignumber.js/index.d.ts) from
+
+```
+    declare var BigNumber: BigNumber.BigNumberStatic;
+    
+    export as namespace BigNumber;
+    export = BigNumber;
+    
+    declare namespace BigNumber {
+```
+to this
+```
+    export default BigNumber;
+    
+    declare module 'bignumber.js' {
+        
+        var BigNumber: BigNumberStatic;
+
+```
+
 ## Attempts to get the BigNumber Type Definitions to work
-1. import BigNumber from 'bignumber.js'
+
+### 1. import BigNumber from 'bignumber.js'
 
 `import BigNumber from 'bignumber.js'`
 
@@ -72,7 +103,7 @@ Using the above project setup with the above BigNumber import in the [index.ts](
 Error:(1, 8) TS1192:Module '"~/node_modules/@types/bignumber.js/index"' has no default export.
 ```
 
-2. declare default export in type definition file
+### 2. declare default export in type definition file
 
 The bignumber.js Type Definition file is location under [node_modules/@types/bignumber.js/index.d.ts](./node_modules/@types/bignumber.js/index.d.ts).
 
@@ -82,7 +113,7 @@ Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
 
 ```
 
-3. import {BigNumber} from 'bignumber.js'`
+### 3. import {BigNumber} from 'bignumber.js'`
 
 `import {BigNumber} from 'bignumber.js'`
 
@@ -97,7 +128,7 @@ ReferenceError: BigNumber is not defined
 
 ```
 
-4. import {BigNumber} but don't export the BigNumber namespace from Type Definition
+### 4. import {BigNumber} but don't export the BigNumber namespace from Type Definition
 
 `import {BigNumber} from 'bignumber.js'` in `index.ts`
 `//export as namespace BigNumber;` comment out line 9 in the Type Definition file
@@ -107,7 +138,7 @@ results in the following TypeScript error
 Error:(6, 31) TS2693:'BigNumber' only refers to a type, but is being used as a value here.
 ```
 
-5. import * as BigNumber from 'bignumber.js
+### 5. import * as BigNumber from 'bignumber.js
 
 `import * as BigNumber from 'bignumber.js'`
 
@@ -117,7 +148,7 @@ Reverting to the original Type Definition and using the above import in the [ind
 Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
 ```
 
-6. import BigNumber = require('BigNumber)
+### 6. import BigNumber = require('BigNumber)
 
 `import BigNumber = require('bignumber.js');`
 
@@ -127,7 +158,7 @@ Installing the node types `npm install @types/node --save` and using the above i
 Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
 ```
 
-7. const BigNumber = require('bignumber.js');
+### 7. const BigNumber = require('bignumber.js');
 
 `const BigNumber = require('bignumber.js');`
 
@@ -137,7 +168,7 @@ using the above require in the [index.ts](./index.ts) file results in TypeScript
 Error:(6, 15) TS2304:Cannot find name 'BigNumber'.
 ```
 
-8. allowSyntheticDefaultImports
+### 8. allowSyntheticDefaultImports
 
 ```
 "allowSyntheticDefaultImports": true  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
@@ -145,4 +176,12 @@ Error:(6, 15) TS2304:Cannot find name 'BigNumber'.
 Using the above config in the TypeScript configuration file [tsconfig.json](./tsconfig.json) results in TypeScript error:
 ```
 Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
+```
+
+### 9. upgrade to TypeScript version 2.4.0
+`npm install typescript@2.4.0 --save-dev`
+
+Upgrading to the next candidate release of TypeScript version [2.4.0](https://github.com/Microsoft/TypeScript/releases/tag/v2.4-rc) results in TypeScript error: 
+```
+index.ts(1,8): error TS1192: Module '"/Users/nicholasaddison/Documents/workspaces/node-imports/node_modules/@types/bignumber.js/index"' has no default export.
 ```
