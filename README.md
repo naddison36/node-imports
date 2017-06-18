@@ -71,6 +71,7 @@ import {BigNumber} from 'bignumber.js';
 
 ```
 
+### 1. Change Type Definition from namespace to module
 As per [this](https://stackoverflow.com/questions/44605322/typescript-type-definitions-for-bignumber) Stack Overflow answer from [Catalyst](https://stackoverflow.com/users/1710444/catalyst), change the bignumber.js Type Definition file [node_modules/@types/bignumber.js/index.d.ts](./node_modules/@types/bignumber.js/index.d.ts) from
 
 ```
@@ -89,6 +90,21 @@ to this
         
         var BigNumber: BigNumberStatic;
 
+```
+
+### 2. import * as BigNumber and delare a new type using BigNumber.BigNumber
+The below import will work with node and a new type is declared so the verbose `BigNumber.BigNumber` does not have to be used as a type all through the code.
+```javascript
+    import * as BigNumber from 'bignumber.js';
+    type BN = BigNumber.BigNumber;
+    
+    const x = 0.1,
+        y = 0.2;
+    
+    const result: BN = new BigNumber(x).
+        plus(y);
+    
+    console.log('%d + %d = %s', x, y, result.toString() );
 ```
 
 ## Attempts to get the BigNumber Type Definitions to work
