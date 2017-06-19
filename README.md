@@ -92,7 +92,7 @@ to this
 
 ```
 
-### 2. import * as BigNumber and delare a new type using BigNumber.BigNumber
+### 2. import * as BigNumber and declare a new type using BigNumber.BigNumber
 The below import will work with node and a new type is declared so the verbose `BigNumber.BigNumber` does not have to be used as a type all through the code.
 ```javascript
     import * as BigNumber from 'bignumber.js';
@@ -133,7 +133,7 @@ Error:(6, 15) TS2709:Cannot use namespace 'BigNumber' as a type.
 
 `import {BigNumber} from 'bignumber.js'`
 
-Reterting the bidnumber.js type definition file change back to `export = BigNumber;` and using the above import in [index.ts](./index.ts) results in TypeScript error:
+Reverting the bidnumber.js type definition file change back to `export = BigNumber;` and using the above import in [index.ts](./index.ts) results in TypeScript error:
 ```
 Error:(6, 31) TS2686:'BigNumber' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 ```
